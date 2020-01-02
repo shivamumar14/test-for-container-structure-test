@@ -1,0 +1,30 @@
+version: "2.1"
+
+jobs:
+  test:
+    docker:
+      - image: circleci/buildpack-deps:stretch-scm-dind
+    steps:
+      - checkout
+      - run:
+          name: "Install contrainer-structure-test"
+          command: |
+            curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
+            chmod +x container-structure-test-linux-amd64
+            sudo mv container-structure-test-linux-amd64 /usr/local/bin/container-structure-test
+      - run:
+          name: "Build container"
+          command: docker build -t tsubasaogawa/test-for-cst:test .
+      - run:
+          name: "Run test"
+          command: |
+            container-structure-test test \
+              --image tsubasaogawa/test-for-cst:test \
+              --config .container-structure-test/config.yaml
+
+workflows:
+  version: "2"
+  run_test:
+    jobs:
+      - test
+
