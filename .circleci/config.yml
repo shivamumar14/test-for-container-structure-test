@@ -3,15 +3,17 @@ version: "2.1"
 jobs:
   test:
     docker:
-      - image: circleci/buildpack-deps:stretch-scm-dind
+      - image: docker:19.03.5-git
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: "Install contrainer-structure-test"
           command: |
+            apk update && apk add curl
             curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
             chmod +x container-structure-test-linux-amd64
-            sudo mv container-structure-test-linux-amd64 /usr/local/bin/container-structure-test
+            mv container-structure-test-linux-amd64 /usr/local/bin/container-structure-test
       - run:
           name: "Build container"
           command: docker build -t tsubasaogawa/test-for-cst:test .
