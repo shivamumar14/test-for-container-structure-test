@@ -29,3 +29,30 @@ container-structure-test test \
   --config .container-structure-test/config.yaml
 ```
 
+It will output the following results:
+
+```
+====================================
+====== Test file: config.yaml ======
+====================================
+=== RUN: Command Test: it says hello
+--- PASS
+stdout: hello
+
+=== RUN: File Existence Test: date file exists
+--- PASS
+
+=== RUN: Metadata Test
+--- PASS
+
+
+=============================================================
+========================== RESULTS ==========================
+=============================================================
+Passes:      3
+Failures:    0
+Total tests: 3
+
+PASS
+```
+
