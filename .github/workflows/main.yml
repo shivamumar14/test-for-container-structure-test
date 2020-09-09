@@ -17,6 +17,7 @@ jobs:
         with: 
           dockerfile: Dockerfile
           tags: myimage
+          push: false 
       - name: run structure tests
         uses: plexsystems/container-structure-test-action@v0.1.0
         with:
