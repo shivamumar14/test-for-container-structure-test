@@ -1,0 +1,24 @@
+name: Skaffold_Test
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [ develop ]
+    types: [opened, edited, closed, reopened]
+     
+jobs:
+  Structure_Test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1.1.1
+        with: 
+          dockerfile: Dockerfile
+          tags: myimage
+      - name: run structure tests
+        uses: plexsystems/container-structure-test-action@v0.1.0
+        with:
+          image: my-image:latest
+          config: .container-structure-test/config.yaml         
